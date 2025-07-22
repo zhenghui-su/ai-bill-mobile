@@ -1,12 +1,18 @@
-import { View, Text } from 'react-native';
-import React from 'react';
+import Auth from '../../components/Auth';
+import Account from '../../components/Account';
+import { View } from 'react-native';
+import { useAuth } from '../_layout';
 
-const profile = () => {
+export default function App() {
+	const session = useAuth((state: any) => state.session);
+
 	return (
 		<View>
-			<Text>profile</Text>
+			{session && session.user ? (
+				<Account key={session.user.id} session={session} />
+			) : (
+				<Auth />
+			)}
 		</View>
 	);
-};
-
-export default profile;
+}
