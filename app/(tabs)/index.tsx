@@ -12,11 +12,18 @@ export const useRecord = create((set) => ({
 		if (!session?.user?.id) {
 			return;
 		}
+		const headers = {
+			Authorization: `Bearer ${session.access_token}`,
+		};
 		axios
-			.post(`${process.env.EXPO_PUBLIC_API_URL}/records`, {
-				user_id: session?.user?.id,
-				date: date.toISOString().split('T')[0],
-			})
+			.post(
+				`${process.env.EXPO_PUBLIC_API_URL}/records`,
+				{
+					user_id: session?.user?.id,
+					date: date.toISOString().split('T')[0],
+				},
+				{ headers }
+			)
 			.then((res) => {
 				set({ records: res.data.records });
 			});
@@ -34,7 +41,7 @@ export default function HomeScreen() {
 		if (session?.user?.id) {
 			fetchRecords(date, session);
 		}
-	}, [date]);
+	}, [date, fetchRecords, session]);
 	return (
 		<SafeAreaView className='flex-1 gap-4 mx-4'>
 			{/* date */}

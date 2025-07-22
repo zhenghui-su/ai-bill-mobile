@@ -38,6 +38,9 @@ export default function App() {
 				content: '你好，请问需要记录什么消费？',
 			},
 		],
+		headers: {
+			Authorization: `Bearer ${session?.access_token}`,
+		},
 		onFinish: (message, options) => {
 			try {
 				const parsedMessage = JSON.parse(message.content);
