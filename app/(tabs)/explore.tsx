@@ -1,7 +1,22 @@
-import { useChat } from '@ai-sdk/react';
+import { Message, useChat } from '@ai-sdk/react';
 import { fetch as expoFetch } from 'expo/fetch';
 import { View, TextInput, ScrollView, Text, SafeAreaView } from 'react-native';
 import { useAuth } from '../_layout';
+import RecordCard from '@/components/RecordCard';
+
+const renderMessage = (message: Message) => {
+	if (message.role === 'assistant' && message.id !== '1') {
+		const parsedMessage = JSON.parse(message.content);
+		// AI 普通文本
+		if (parsedMessage.text) {
+			return <Text>{parsedMessage.text}</Text>;
+		}
+		// AI 消费记录
+		return <RecordCard record={parsedMessage.records} />;
+	}
+	// 用户输入
+	return <Text>{message.content}</Text>;
+};
 
 export default function App() {
 	const session = useAuth((state: any) => state.session);
@@ -39,7 +54,7 @@ export default function App() {
 						<View key={m.id} style={{ marginVertical: 8 }}>
 							<View>
 								<Text style={{ fontWeight: 700 }}>{m.role}</Text>
-								<Text>{m.content}</Text>
+								<View>{renderMessage(m)}</View>
 							</View>
 						</View>
 					))}
