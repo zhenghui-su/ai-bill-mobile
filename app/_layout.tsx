@@ -36,7 +36,7 @@ export default function RootLayout() {
 		supabase.auth.onAuthStateChange((_event, session) => {
 			setSession({ session });
 		});
-	}, []);
+	}, [setSession]);
 
 	if (!loaded) {
 		// Async font loading only occurs in development.
