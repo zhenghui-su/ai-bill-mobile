@@ -13,6 +13,7 @@ import '../global.css';
 import { create } from 'zustand';
 import { useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import '../lib/polyfill';
 
 export const useAuth = create((set) => ({
 	session: null,
