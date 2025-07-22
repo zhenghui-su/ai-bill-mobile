@@ -19,6 +19,13 @@
 pnpm install
 ```
 
+根目录下添加.env 文件
+```
+EXPO_PUBLIC_API_URL=http://localhost:8000
+EXPO_PUBLIC_Supabase_URL=
+EXPO_PUBLIC_Supabase_AnonKey=
+```
+
 启动项目
 
 ```bash
